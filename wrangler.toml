@@ -1,9 +1,7 @@
-name = "adam-ar"
-pages_build_output_dir = "public"
+# Static frontend only: Worker serving ./public as static assets. No database.
+name = "adam-ai"
 compatibility_date = "2025-01-01"
+routes = [ { pattern = "adam.fingtaj.com", custom_domain = true }, { pattern = "www.adam.fingtaj.com", custom_domain = true } ]
 
-# After running `npx wrangler d1 create adam-ar-db`, paste the database_id it prints:
-[[d1_databases]]
-binding = "DB"
-database_name = "adam-ar-db"
-database_id = "PASTE_YOUR_DATABASE_ID_HERE"
+[assets]
+directory = "./public"
