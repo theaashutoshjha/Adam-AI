@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ADAM-AR · Voice Audit Intelligence</title>
+<meta name="description" content="ADAM-AR audits every call for Indian broking, wealth and support desks, and runs AI voice support.">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#141B29;--n2:#1D2840;--cy:#00D4E8;--am:#FFB000;--bg:#F4F7FB;--sf:#fff;--ink:#141B29;--mu:#586075;--ln:#DCE3ED;--tl:#007F90;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1420;--sf:#161F31;--ink:#EAF0F8;--mu:#9AA7BD;--ln:#27334A;--tl:#38DDEE}}
+:root[data-theme="dark"]{--bg:#0E1420;--sf:#161F31;--ink:#EAF0F8;--mu:#9AA7BD;--ln:#27334A;--tl:#38DDEE}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font:16px/1.65 "IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:30}
+h1,h2,h3,.sr{font-family:Sora,"Segoe UI",system-ui,sans-serif;letter-spacing:-.02em;line-height:1.15}
+h1{font-size:clamp(34px,5.2vw,58px)}h2{font-size:clamp(26px,3.4vw,38px)}h3{font-size:18px}
+p{max-width:64ch}a{color:inherit}
+.w{max-width:1120px;margin:auto;padding:0 22px}
+.s{padding:76px 0}.mu{color:var(--mu)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);border-bottom:1px solid #26314A}
+.hd{display:flex;align-items:center;gap:18px;min-height:68px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.hd img{height:40px;width:auto;display:block}
+nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;max-width:100%}
+nav a{color:#B8C4D8;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:14px;white-space:nowrap}
+nav a:hover{color:#fff}nav a.on{color:#fff;background:#243150}
+.btn{display:inline-block;padding:12px 22px;border-radius:10px;font:600 14px Sora,sans-serif;text-decoration:none;border:1px solid transparent;cursor:pointer}
+.am{background:var(--am);color:#141B29}.gh{border-color:#42517A;color:#fff}.dk{background:var(--navy);color:#fff}
+:focus-visible{outline:2px solid var(--tl);outline-offset:2px}
+header :focus-visible,.hero :focus-visible,.nv :focus-visible{outline-color:var(--cy)}
+.hero{background:var(--navy);color:#fff;padding:70px 0 80px;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:46px 46px}
+.hg{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+.hero p.lead{color:#B8C4D8;font-size:18px;margin:22px 0 30px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.dm{background:#0A101B;border:1px solid #2A3652;border-radius:16px;overflow:hidden;box-shadow:0 30px 60px -30px #000}
+.dh{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #1F2A42;font:12px "IBM Plex Mono",monospace;color:#7F8CA6}
+.dh i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2F3B58;margin-right:5px}
+#tr{padding:14px 16px;min-height:236px;font:12.5px/1.65 "IBM Plex Mono",monospace;color:#C9D4E6}
+#tr p{margin:0 0 9px;max-width:none;animation:in .4s}
+#tr b{color:var(--cy)}#tr b.c{color:#7AA2FF}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.tg{display:inline-block;margin:2px 0 0 6px;padding:0 7px;border-radius:5px;background:#0F3B38;color:#4EE0B0;font-size:10.5px}
+.rs{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;padding:16px;border-top:1px solid #1F2A42;align-items:center}
+#sc{font:700 44px Sora;color:#fff;line-height:1}#sc small{font-size:15px;color:#7F8CA6}
+#ck{list-style:none;padding:0;font-size:12.5px;color:#7F8CA6}
+#ck li{display:flex;justify-content:space-between;padding:2px 0}#ck li.ok{color:#D8E4F5}#ck li.ok b{color:#4EE0B0}
+.strip{background:var(--navy);border-top:1px solid #26314A;color:#B8C4D8;font-size:14px}
+.strip .w{display:flex;flex-wrap:wrap;gap:10px 34px;padding-top:18px;padding-bottom:18px}
+.strip span::before{content:"";display:inline-block;width:8px;height:8px;background:var(--am);border-radius:2px;margin-right:9px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0}
+.stats div{padding:6px 24px;border-left:3px solid var(--cy)}
+.stats b{display:block;font:700 34px Sora}.stats span{color:var(--mu);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.pn{border-radius:20px;padding:38px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.pn.nv{background:var(--navy);color:#fff}.pn.nv p{color:#B8C4D8}.pn.lt{background:var(--sf);border:1px solid var(--ln)}
+.pn .from{font:700 26px Sora}.pn small{font-size:13px;font-weight:400;opacity:.7}
+.tb{width:100%;border-collapse:collapse;background:var(--sf);border-radius:14px;overflow:hidden;font-size:15px}
+.tb th,.tb td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ln)}
+.tb th{font:600 13px Sora;background:var(--navy);color:#fff}.tb th:last-child{color:var(--am)}
+.tb td:last-child{background:#00D4E814;font-weight:500}.tb td:first-child{font-weight:500}
+.ov{overflow-x:auto;border-radius:14px}
+.band{background:var(--navy);color:#fff;text-align:center;padding:64px 0}.band p{margin:14px auto 26px;color:#B8C4D8}
+.ph{background:var(--navy);color:#fff;padding:60px 0 56px}.ph p{color:#B8C4D8;margin-top:16px;font-size:18px}
+.rl{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 44px}
+.rl div{border-top:2px solid var(--ln);padding:20px 0 26px}.rl h3{margin-bottom:8px}.rl p{color:var(--mu);font-size:15px}
+.stp{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
+.stp div{border-top:3px solid var(--cy);padding-top:14px}.stp b{font:700 28px Sora;color:var(--tl)}.stp h3{margin:4px 0 6px}.stp p{color:var(--mu);font-size:14.5px}
+.cd{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:24px}.cd h3{margin-bottom:8px}.cd p{color:var(--mu);font-size:15px}
+.tag{display:inline-block;margin-top:12px;padding:2px 10px;border-radius:6px;background:#00D4E81F;color:var(--tl);font-size:12.5px;font-weight:500}
+.tabs{display:inline-flex;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:4px;margin:24px 0}
+.tabs button{border:0;background:none;color:var(--ink);font:600 14px Sora;padding:10px 20px;border-radius:9px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--navy);color:#fff}
+.pg4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;align-items:stretch}
+.pl{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px}
+.pl.top{background:var(--navy);color:#fff;border-color:var(--navy)}.pl.top .al,.pl.top .o{color:#B8C4D8}
+.pr{font:700 30px Sora}.pr small{display:block;font:400 12.5px "IBM Plex Sans";opacity:.7}
+.al{color:var(--tl);font-weight:500}.pl.top .al{color:var(--cy)}
+.pl ul{list-style:none;padding:0;font-size:14.5px;flex:1;border-top:1px solid var(--ln);padding-top:14px}.pl.top ul{border-color:#2C3858}
+.pl li{padding:3px 0 3px 24px;position:relative}
+.pl li::before{content:"";position:absolute;left:3px;top:10px;width:10px;height:5px;border-left:2px solid var(--tl);border-bottom:2px solid var(--tl);transform:rotate(-45deg)}
+.pl.top li::before{border-color:var(--cy)}.pl .o{font-size:13px;color:var(--mu)}
+.nt{margin-top:26px;padding:16px 20px;border-left:4px solid var(--am);background:var(--sf);border-radius:0 10px 10px 0;font-size:14.5px;color:var(--mu);max-width:none}
+.cg{display:grid;grid-template-columns:1fr 1.3fr;gap:48px}
+@media(max-width:860px){.hg,.cg{grid-template-columns:1fr}.s{padding:56px 0}}
+label{display:block;font:600 13px Sora;margin:16px 0 6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:10px;background:var(--sf);color:var(--ink);font:inherit}
+textarea{min-height:120px;resize:vertical}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}@media(max-width:560px){.f2{grid-template-columns:1fr}}
+#out{margin-top:22px;padding:20px;border-radius:12px;background:var(--sf);border:1px solid var(--tl)}
+#out textarea{margin:12px 0;font:13px "IBM Plex Mono",monospace;min-height:150px}
+footer{background:var(--navy);color:#B8C4D8;padding:48px 0 36px;font-size:14px}
+footer .w{display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between}
+footer img{height:38px;display:block;margin-bottom:12px}footer a{display:block;color:#B8C4D8;text-decoration:none;padding:3px 0}footer a:hover{color:#fff}
+footer small{display:block;width:100%;opacity:.65;border-top:1px solid #26314A;padding-top:18px;line-height:1.5}
+.lg .w{max-width:800px}.lg h2{font-size:21px;margin:36px 0 10px}.lg p,.lg li{color:var(--mu);margin-bottom:10px;font-size:15.5px}.lg ul{padding-left:20px;max-width:66ch}.lg b{color:var(--ink)}
+mark{background:#FFB00040;color:var(--ink);padding:0 4px;border-radius:4px}.ck{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:14px;color:var(--mu)}.ck input{width:auto;margin-top:5px}
+#bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--cy),var(--am));transform:scaleX(0);transform-origin:0;z-index:40}
+.pg{animation:pg .55s cubic-bezier(.2,.7,.2,1)}@keyframes pg{from{opacity:0;transform:translateY(14px)}}
+.hero h1 span{display:block;overflow:hidden;padding-bottom:.08em}.hero h1 span i{display:block;font-style:normal;animation:up .9s cubic-bezier(.2,.8,.2,1) both}.hero h1 span:nth-child(2) i{animation-delay:.12s}.hero h1 span:nth-child(3) i{animation-delay:.24s}@keyframes up{from{transform:translateY(105%)}}
+.wave{display:flex;align-items:center;gap:3px;height:56px;margin-top:36px}.wave b{flex:1;max-width:6px;height:100%;border-radius:3px;background:linear-gradient(var(--cy),var(--am));animation:wv 1.7s ease-in-out infinite}@keyframes wv{0%,100%{transform:scaleY(.1)}50%{transform:scaleY(var(--h,.8))}}
+.dm{transition:transform .25s;will-change:transform}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+.pl,.cd,.pn{position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}.pl::after,.cd::after,.pn::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(260px circle at var(--x,50%) var(--y,50%),#00D4E828,transparent 70%)}.pl:hover::after,.cd:hover::after,.pn:hover::after{opacity:1}
+.pl:hover,.cd:hover{transform:translateY(-6px);box-shadow:0 24px 40px -24px #0A1020AA;border-color:var(--cy)}
+.btn{position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px #00D4E8AA}.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#ffffff55,transparent 70%);transform:translateX(-120%)}.btn:hover::before{transform:translateX(120%);transition:transform .7s}
+.mq{overflow:hidden;white-space:nowrap;padding:18px 0}.mq div{display:inline-block;animation:mq 34s linear infinite}.mq span{margin-right:48px}.mq:hover div{animation-play-state:paused}@keyframes mq{to{transform:translateX(-50%)}}
+.rl div{transition:border-color .3s}.rl div:hover{border-color:var(--cy)}
+input:focus,select:focus,textarea:focus{border-color:var(--tl);box-shadow:0 0 0 4px #00D4E825;outline:0}#out:not([hidden]){animation:pg .5s}
+.fq details{border-bottom:1px solid var(--ln);padding:16px 0}.fq summary{cursor:pointer;font:600 16px Sora,sans-serif;list-style:none;display:flex;justify-content:space-between;gap:16px}.fq summary::-webkit-details-marker{display:none}.fq summary::after{content:"+";color:var(--tl);font-size:22px;line-height:1;transition:transform .3s}.fq details[open] summary::after{transform:rotate(45deg)}.fq p{margin-top:10px;color:var(--mu)}
+@media(prefers-reduced-motion:reduce){#tr p,.pg,.hero h1 span i,.mq div,#out{animation:none!important}.wave b{animation:none;transform:scaleY(var(--h,.6))}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header><div class="w hd">
+<a href="#home" aria-label="ADAM-AR home"><img src="data:image/png;base64,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" alt="ADAM-AR Voice Audit Intelligence"></a>
+<nav id="nav" aria-label="Main">
+<a href="#home">Home</a><a href="#audit">AI Audit</a><a href="#support">AI Support Desk</a><a href="#pricing">Pricing</a><a href="#security">Security</a><a href="#contact">Contact</a>
+</nav></div></header>
+
+<main>
+<!-- HOME -->
+<section class="pg" id="home">
+<div class="hero"><div class="w hg">
+<div>
+<h1><span><i>Every call audited.</i></span><span><i>Every finding backed</i></span><span><i>by a quote.</i></span></h1>
+<p class="lead">ADAM-AR turns customer calls into diarized transcripts, rule-by-rule scores and fatal-breach alerts for Indian broking, wealth and support desks.</p>
+<div class="row"><a class="btn am" href="#pricing">See pricing</a><a class="btn gh" href="#contact">Book a demo</a></div>
+<div class="wave" id="wave" aria-hidden="true"></div>
+</div>
+<div class="dm" aria-label="Live audit demonstration">
+<div class="dh"><span><i></i><i></i><i></i></span><span>pre-order desk · call #9481</span></div>
+<div id="tr"></div>
+<div class="rs"><div id="sc">0<small> / 100</small></div><ul id="ck"></ul></div>
+</div></div>
+<div class="strip mq"><div><span>Built for Indian capital markets</span><span>Aligned to SEBI voice mandates</span><span>Dual-channel verbatim ASR</span><span>Serverless, high availability</span><span>Built for Indian capital markets</span><span>Aligned to SEBI voice mandates</span><span>Dual-channel verbatim ASR</span><span>Serverless, high availability</span></div></div>
+</div>
+
+<div class="s"><div class="w stats">
+<div><b data-n="100" data-s="%">100%</b><span>of recorded calls audited, against about 2% by manual spot-checks</span></div>
+<div><b data-n="60" data-p="&lt; " data-s=" s">&lt; 60 s</b><span>from audio ingestion to a finished audit</span></div>
+<div><b>Unlimited</b><span>isolated operational desks</span></div>
+<div><b>0%</b><span>cross-desk data bleed under strict role-based access</span></div>
+</div></div>
+
+<div class="s" style="padding-top:0"><div class="w">
+<h2 style="max-width:18ch;margin-bottom:30px">Two products, one voice platform</h2>
+<div class="two">
+<div class="pn nv"><h3>AI Audit</h3><p>Score every recorded call against your own rulebook. Get transcripts, evidence quotes, compliance flags, risk indicators and coaching notes.</p><p class="from">From ₹7,999<small> / month, 5,000 audited minutes</small></p><a class="btn am" href="#audit">Explore AI Audit</a></div>
+<div class="pn lt"><h3>AI Support Desk</h3><p class="mu">AI voice agents that make and receive calls, answer common questions, follow approved workflows and hand over to your staff.</p><p class="from">From ₹2,999<small> / month, 300 connected minutes</small></p><a class="btn dk" href="#support">Explore AI Support Desk</a></div>
+</div></div></div>
+
+<div class="s" style="padding-top:0"><div class="w">
+<h2 style="margin-bottom:10px">Manual spot-checks versus ADAM-AR</h2><p class="mu" style="margin-bottom:26px">Sampling leaves most calls unheard. ADAM-AR listens to all of them.</p>
+<div class="ov"><table class="tb"><tr><th>What you measure</th><th>Manual audits</th><th>ADAM-AR</th></tr>
+<tr><td>Coverage</td><td>1% to 3% random spot-checks</td><td>100% of calls</td></tr>
+<tr><td>Turnaround</td><td>3 to 7 business days per batch</td><td>Under 60 seconds</td></tr>
+<tr><td>Evidence</td><td>Subjective reviewer notes</td><td>Verbatim, timestamped, speaker-tagged quotes</td></tr>
+<tr><td>Fatal breaches</td><td>High risk of going undiscovered</td><td>Flagged on every call</td></tr>
+<tr><td>Adding desks</td><td>Cost rises with headcount</td><td>Unlimited isolated desks</td></tr></table></div>
+</div></div>
+<div class="band"><div class="w"><h2>See your own calls audited</h2><p>Send us a sample of recordings and we will walk you through the scorecard, flags and coaching output.</p><a class="btn am" href="#contact">Talk to us</a></div></div>
+</section>
+
+<!-- AUDIT -->
+<section class="pg" id="audit" hidden>
+<div class="ph"><div class="w"><h1>AI Audit</h1><p>A quality-analysis platform for support teams, broking desks, BPOs and contact centres. It processes recordings and returns transcripts, scores, compliance flags, risk indicators and coaching insights.</p></div></div>
+<div class="s"><div class="w"><h2 style="margin-bottom:30px">What you get</h2>
+<div class="rl">
+<div><h3>Operational intelligence</h3><p>See call throughput, conversation duration and audit coverage as audio arrives.</p></div>
+<div><h3>Deterministic rubrics</h3><p>Evaluation matrices where every point is tied to a verbatim quote, so nothing is scored without evidence.</p></div>
+<div><h3>Fatal compliance overrides</h3><p>A critical violation sets the final score to zero and still keeps the coaching feedback.</p></div>
+<div><h3>Actionable coaching</h3><p>“What to say instead” suggestions with the agent’s exact words and alternative phrasing.</p></div>
+<div><h3>Serverless resilience</h3><p>Cloudflare Workers, D1 and R2 storage with a one-call-per-minute queue for steady uptime.</p></div>
+<div><h3>Governance and isolation</h3><p>A dedicated database partition per desk keeps equities, mutual funds and support data apart.</p></div>
+</div></div></div>
+<div class="s" style="padding-top:0"><div class="w"><h2 style="margin-bottom:30px">How a call becomes an audit</h2>
+<div class="stp">
+<div><b>1</b><h3>Ingest</h3><p>Upload audio or connect a telephony PBX webhook with dual-channel stereo separation.</p></div>
+<div><b>2</b><h3>Diarize</h3><p>Timestamped speaker turns separate advisor and client with millisecond precision.</p></div>
+<div><b>3</b><h3>Audit</h3><p>Checks for disclosures, consent and zero-return guarantees, each with a quoted source line.</p></div>
+<div><b>4</b><h3>Dispatch</h3><p>Scorecards and coaching go to advisors and compliance heads in one click.</p></div>
+</div></div></div>
+<div class="s" style="padding-top:0"><div class="w"><h2 style="margin-bottom:10px">Isolated operational desks</h2><p class="mu" style="margin-bottom:26px">Each desk has its own database partition, scorecard and access permissions. Equity, mutual fund advisory, and support and governance desks are covered.</p>
+<div class="two">
+<div class="cd"><h3>Pre-order regulatory desk</h3><p>Enforces SEBI voice mandates against exchange trade books: caller CLI, pre-order consent order and scrip disclosures.</p><span class="tag">5 binary regulatory parameters</span></div>
+<div class="cd"><h3>Equity onboarding desk</h3><p>Monitors demat and trading account opening checks, risk-profiling disclosures and client declaration recordings.</p><span class="tag">5-point quality scorecard</span></div>
+<div class="cd"><h3>Equity regular desk</h3><p>Audits advisory dialogues, market order confirmations, MTF disclosures and objection handling.</p><span class="tag">5-point quality scorecard</span></div>
+</div></div></div>
+<div class="band"><div class="w"><h2>Audit plans start at ₹7,999 a month</h2><p>5,000 audited minutes included, with overage from ₹1.05 a minute.</p><a class="btn am" href="#pricing">Compare plans</a></div></div>
+</section>
+
+<!-- SUPPORT -->
+<section class="pg" id="support" hidden>
+<div class="ph"><div class="w"><h1>AI Support Desk</h1><p>An AI voice support product that makes and receives customer calls, answers common questions, follows approved workflows and escalates to your human team.</p></div></div>
+<div class="s"><div class="w"><h2 style="margin-bottom:30px">What it does</h2>
+<div class="rl">
+<div><h3>Inbound and outbound calling</h3><p>Handle incoming queries and place outgoing calls, subject to consent, notices and telecom rules.</p></div>
+<div><h3>Approved workflows</h3><p>Agents follow the steps you sign off, from a single agent on Starter to multiple agents on Business.</p></div>
+<div><h3>Knowledge base</h3><p>Answers come from your content, from a basic base up to an advanced, custom one.</p></div>
+<div><h3>Human escalation</h3><p>Hand a conversation to staff when needed, with custom escalation workflows on Business.</p></div>
+<div><h3>Summaries and analytics</h3><p>Every call gets a summary and history, with standard to advanced analytics by plan.</p></div>
+<div><h3>CRM integrations</h3><p>Optional add-on on Growth, included or agreed in scope on Business.</p></div>
+</div>
+<p class="nt">Plans cap simultaneous calls and monthly connected minutes. 24/7 availability does not mean unlimited minutes. Enterprise needs concurrency, minutes, integrations, deployment and SLA agreed in a written quotation.</p>
+</div></div>
+<div class="band"><div class="w"><h2>Support Desk plans start at ₹2,999 a month</h2><p>One concurrent call and 300 connected minutes, with overage from ₹5.50 a minute.</p><a class="btn am" href="#pricing">Compare plans</a></div></div>
+</section>
+
+<!-- PRICING -->
+<section class="pg" id="pricing" hidden>
+<div class="ph"><div class="w"><h1>Pricing</h1><p>Simple monthly plans in INR. Each plan lists exactly what you get for the price.</p></div></div>
+<div class="s"><div class="w">
+<div class="tabs" role="group" aria-label="Product"><button id="t0" aria-pressed="true">AI Audit</button><button id="t1" aria-pressed="false">AI Support Desk</button></div>
+<div class="pg4" id="plans"></div>
+<div class="cd" style="margin-top:28px"><h3>Estimate your AI Audit plan</h3><div class="f2"><div><label for="cc">Calls per month</label><input id="cc" type="number" min="0" value="3000"></div><div><label for="cl">Average call length, in minutes</label><input id="cl" type="number" min="1" value="20"></div></div><p id="ce" style="margin-top:16px;color:var(--ink)" aria-live="polite"></p></div>
+<p class="nt" id="pn"></p>
+<p class="nt">Prices are monthly, in INR, and exclude GST. These are proposed launch prices for customer testing and may change after a cost review of measured production usage. Integrations, data retention, custom reports, dedicated hosting, SLA and onboarding may carry separate fees. Nothing is unlimited unless a signed contract says so.</p>
+<h2 style="margin:52px 0 12px">Pricing questions</h2><div class="fq"><details><summary>What counts as an audited minute?</summary><p>The actual audio duration processed, not the number of calls. Call counts on this page are 20-minute illustrations.</p></details><details><summary>What happens if I use more than my allowance?</summary><p>Extra minutes are billed at your plan’s overage rate. If you regularly exceed it, a bigger plan or an enterprise quote is usually cheaper.</p></details><details><summary>Is GST included?</summary><p>No. Prices exclude GST, and we issue GST invoices.</p></details><details><summary>What is a concurrent call?</summary><p>A call that is active at the same moment. The limit caps simultaneous calls, not the total calls in a month.</p></details><details><summary>Can I start with a pilot?</summary><p>Yes. We pilot with a few Indian businesses first. <a href="#contact" style="color:var(--tl)">Tell us about your desks</a> and we will suggest a plan.</p></details></div>
+</div></div>
+</section>
+
+<!-- SECURITY -->
+<section class="pg" id="security" hidden>
+<div class="ph"><div class="w"><h1>Security and governance</h1><p>Call audio is sensitive. ADAM-AR keeps every desk’s data separate and every action on record.</p></div></div>
+<div class="s"><div class="w"><div class="rl">
+<div><h3>Role-based access control</h3><p>People see only the desks and scorecards their role allows.</p></div>
+<div><h3>Isolated desk databases</h3><p>Each desk runs on its own partition, so there is no cross-desk bleed.</p></div>
+<div><h3>Tamper-proof audit trails</h3><p>Incidents and actions are written to immutable logs, and each ticket gets a tracking ID.</p></div>
+<div><h3>Hardened sessions</h3><p>PBKDF2 password hashing through Web Crypto and HttpOnly session cookies.</p></div>
+<div><h3>Documented data terms</h3><p>Recording notices, access controls, retention and deletion terms are documented for every customer.</p></div>
+<div><h3>Measured before promised</h3><p>We pilot with a few businesses first and measure accuracy and call completion before guaranteeing SLAs.</p></div>
+</div></div></div>
+</section>
+
+<!-- CONTACT -->
+<section class="pg" id="contact" hidden>
+<div class="ph"><div class="w"><h1>Talk to us</h1><p>Tell us about your desks and call volumes. We will reply with a demo plan and a quote.</p></div></div>
+<div class="s"><div class="w cg">
+<div><h2>Contact</h2><p class="mu" style="margin:14px 0 22px">Email is the fastest way to reach the team.</p>
+<p><b>Email</b><br><a href="mailto:contact@fingtaj.com" style="color:var(--tl);font-weight:500">contact@fingtaj.com</a></p>
+<p style="margin-top:18px"><b>Useful to include</b><br><span class="mu">Your desks, monthly call volume and average call length, and whether you need audit, support desk or both.</span></p></div>
+<div><form id="f" novalidate>
+<div class="f2"><div><label for="n">Full name</label><input id="n" name="n" required autocomplete="name"></div>
+<div><label for="e">Work email</label><input id="e" name="e" type="email" required autocomplete="email"></div>
+<div><label for="o">Organisation</label><input id="o" name="o" required autocomplete="organization"></div>
+<div><label for="i">Interested in</label><select id="i" name="i"><option>AI Audit</option><option>AI Support Desk</option><option>Both products</option><option>Something else</option></select></div></div>
+<label for="v">Monthly call volume</label><input id="v" name="v" placeholder="For example, 5,000 calls of 20 minutes">
+<label for="m">Message</label><textarea id="m" name="m" required></textarea>
+<label class="ck"><input type="checkbox" id="c" name="c"><span>I agree that ADAM-AR may use these details to reply to my enquiry, as described in the <a href="#privacy" style="color:var(--tl)">privacy policy</a>. I can withdraw consent by emailing contact@fingtaj.com.</span></label>
+<p id="er" role="alert" style="color:#C0392B;font-size:14px;margin-top:10px" hidden>Fill in name, work email, organisation and message, and tick the consent box.</p>
+<div class="row" style="margin-top:20px"><button class="btn dk" type="submit">Send enquiry</button></div></form>
+<div id="out" hidden><p><b>Your email app should open with this message addressed to contact@fingtaj.com.</b> If it did not, copy the message and send it to that address.</p>
+<textarea id="cp" readonly></textarea><div class="row"><button class="btn dk" id="cb" type="button">Copy message</button><a class="btn gh" id="ml" style="color:var(--ink);border-color:var(--ln)" href="mailto:contact@fingtaj.com" target="_blank" rel="noopener">Open email app</a></div></div>
+</div></div></div>
+</section>
+<!-- LEGAL PAGES -->
+<section class="pg lg" id="privacy" hidden><div class="ph"><div class="w"><h1>Privacy policy</h1><p>Last updated 15 November 2026</p></div></div><div class="s"><div class="w">
+<h2>Who we are</h2><p>ADAM-AR is operated by <mark>[Legal entity name]</mark> (“we”, “us”). You can reach us at contact@fingtaj.com. Write to us there for any privacy request.</p>
+<h2>Two roles</h2><p><b>Website visitors.</b> For details you send us through this site, we decide why and how they are used.</p><p><b>Customer call data.</b> When a customer uses AI Audit or AI Support Desk, the customer decides why its call recordings and transcripts are processed. We process them on the customer’s instructions under a written agreement. A data processing agreement is available on request.</p>
+<h2>What we collect</h2><ul><li>Website: name, work email, organisation, call volume, your message, a record of your consent, and technical data such as IP address in server logs.</li><li>Product: audio recordings, transcripts, scores and flags, user account details and usage minutes.</li></ul>
+<h2>Why we use it</h2><ul><li>To answer enquiries, prepare demos and send quotes.</li><li>To provide, secure and support the service.</li><li>To bill customers and keep GST and company records.</li><li>To meet legal obligations and lawful requests from authorities.</li></ul><p>We do not sell personal data.</p>
+<h2>Consent</h2><p>We ask for your consent before using details from our contact form. You can withdraw it at any time by emailing contact@fingtaj.com. Withdrawal does not affect use that already happened lawfully.</p>
+<h2>Who we share it with</h2><p>Hosting, telephony, transcription and AI providers that work for us, and authorities when the law requires it: <mark>[list providers]</mark>. Our infrastructure runs on Cloudflare; data location: <mark>[confirm regions]</mark>.</p>
+<h2>How long we keep it</h2><p>Enquiries: <mark>[12 months]</mark>. Customer call data: as set in the customer’s contract and retention settings, then deleted within <mark>[30 days]</mark> of termination unless the law requires longer. Billing records: as required by tax and company law.</p>
+<h2>Security</h2><p>Role-based access control, isolated databases for each desk, hashed passwords, HttpOnly session cookies and tamper-proof audit trails. No system is perfectly secure. If a breach affects your data we will notify you and the authorities as the law requires.</p>
+<h2>Your rights</h2><p>You can ask to access, correct or erase your personal data, withdraw consent, nominate someone to act for you, and complain to us. Write to contact@fingtaj.com. If we do not resolve it, you can approach the Data Protection Board of India once its complaint process applies to your case.</p>
+<h2>Children</h2><p>Our services are for businesses. We do not knowingly collect data from anyone under 18.</p>
+<h2>Laws we follow</h2><p>Information Technology Act, 2000 and the Reasonable Security Practices and SPDI Rules, 2011; the Digital Personal Data Protection Act, 2023 and Rules, 2025. Most DPDP duties apply from 13 May 2027, and we are aligning with them ahead of that date.</p>
+<h2>Changes</h2><p>We will post updates here with a new date.</p></div></div></section>
+
+<section class="pg lg" id="terms" hidden><div class="ph"><div class="w"><h1>Terms of service</h1><p>Last updated 15 November 2026</p></div></div><div class="s"><div class="w">
+<h2>Agreement</h2><p>These terms govern use of this website and ADAM-AR services by <mark>[Legal entity name]</mark>. A signed order form or contract overrides these terms where they differ. By using the services you confirm you have authority to bind your organisation.</p>
+<h2>Services and plans</h2><p>AI Audit and AI Support Desk are provided as monthly subscriptions with the allowances shown on the Pricing page. Prices are in INR and exclude GST. Extra usage is billed at the published overage rate. Listed prices are proposed launch prices and can change for new subscriptions after a cost review. Nothing is unlimited unless a signed contract says so.</p>
+<h2>Fees and tax</h2><p>We issue GST invoices. Fees are due as stated on the invoice. Late payment can lead to suspension after notice. Integrations, retention, custom reports, dedicated hosting, SLA and onboarding may carry separate fees.</p>
+<h2>Your responsibilities</h2><ul><li>Have a lawful basis and any required consent and notice for every recording and call you upload or place.</li><li>Follow the <a href="#calls" style="color:var(--tl)">call compliance and acceptable use</a> rules.</li><li>Keep login details secure and tell us promptly about misuse.</li></ul>
+<h2>Your data</h2><p>You own your recordings, transcripts and outputs. You allow us to process them only to provide the service, as set out in the privacy policy and any data processing agreement.</p>
+<h2>AI output</h2><p>Scores, flags and summaries are produced by AI and may contain errors. They support, and do not replace, review by your qualified compliance staff. See the <a href="#disclaimer" style="color:var(--tl)">disclaimer</a>.</p>
+<h2>Intellectual property and confidentiality</h2><p>We keep all rights in the platform, software and branding. Each party keeps the other’s non-public information confidential, except where disclosure is required by law.</p>
+<h2>Availability</h2><p>We aim for high availability but give no uptime guarantee unless an SLA is agreed in writing.</p>
+<h2>Liability</h2><p>To the extent the law allows, we are not liable for indirect or consequential loss, and our total liability is limited to the fees you paid in the <mark>[12]</mark> months before the claim.</p>
+<h2>Termination</h2><p>You can cancel as described in the <a href="#refunds" style="color:var(--tl)">refunds and cancellation</a> policy. We may suspend or end access for material breach or unlawful use.</p>
+<h2>Governing law and disputes</h2><p>Indian law governs these terms. Disputes go first to the grievance process, then to arbitration under the Arbitration and Conciliation Act, 1996, seated in <mark>[city]</mark>, and the courts at <mark>[city]</mark> have jurisdiction.</p></div></div></section>
+
+<section class="pg lg" id="refunds" hidden><div class="ph"><div class="w"><h1>Refunds and cancellation</h1><p>Last updated 15 November 2026</p></div></div><div class="s"><div class="w">
+<h2>Cancelling</h2><p>You can cancel a monthly plan by emailing contact@fingtaj.com. Cancellation takes effect at the end of the current billing month, and you keep access until then.</p>
+<h2>Refunds</h2><ul><li>Fees for a month already started and usage already consumed are not refundable.</li><li>Duplicate or wrongly calculated charges are corrected or refunded within <mark>[7]</mark> business days of confirmation.</li><li>If we fail to provide the service as the contract says, you may claim a credit or refund as the contract provides.</li><li>Overage charges are refundable only if they were billed in error.</li></ul>
+<h2>Billing disputes</h2><p>Tell us within <mark>[7]</mark> days of the invoice date, with the invoice number and a short description. We acknowledge within 48 hours.</p>
+<h2>Pilots and enterprise</h2><p>Pilot and enterprise terms in a signed order form override this page. Refunds are processed to the original payment method.</p>
+<h2>Shipping</h2><p>ADAM-AR is a digital service. Nothing is shipped.</p></div></div></section>
+
+<section class="pg lg" id="calls" hidden><div class="ph"><div class="w"><h1>Call compliance and acceptable use</h1><p>Rules for customers using AI Support Desk and AI Audit</p></div></div><div class="s"><div class="w">
+<h2>AI Support Desk: outbound and inbound calls</h2><p>The customer is the principal entity responsible for every call placed under its registration. Before you call, make sure you:</p><ul><li>are registered under TRAI’s TCCCPR 2018 framework (DLT) where your calls are commercial communications, and use only approved headers and templates;</li><li>check numbers against the national do-not-call preference register and hold valid consent where required;</li><li>call only within permitted hours and show a valid caller ID;</li><li>tell people at the start that they are speaking with an AI agent and that the call may be recorded. A TRAI proposal on AI voice is expected to make this disclosure mandatory, and we recommend it now;</li><li>keep records of consent, call outcome and recording notices.</li></ul>
+<h2>AI Audit: recordings</h2><p>You must have a lawful basis and any required notice or consent for the recordings you upload. If you are regulated, for example as a SEBI-registered intermediary, you remain responsible for your own recording, retention and reporting duties. ADAM-AR assists with audit and does not replace them.</p>
+<h2>Not allowed</h2><ul><li>Spam, harassment, threats or misleading calls.</li><li>Impersonating a person or organisation, or cloning a voice without permission.</li><li>Fraud, unlawful collections practices or any unlawful content.</li><li>Trying to bypass limits, security or other customers’ isolation.</li></ul>
+<p>We may suspend a service that breaks these rules or that telecom providers or regulators ask us to stop.</p></div></div></section>
+
+<section class="pg lg" id="cookies" hidden><div class="ph"><div class="w"><h1>Cookie policy</h1><p>Last updated 15 November 2026</p></div></div><div class="s"><div class="w">
+<h2>This website</h2><p>This website does not set advertising or analytics cookies. Its fonts load from Google Fonts, so Google receives your IP address when the page loads.</p>
+<h2>Product sign-in</h2><p>The workplace app uses strictly necessary, HttpOnly session cookies to keep you signed in and secure. They expire when the session ends.</p>
+<h2>Future changes</h2><p>If we add analytics or marketing cookies, we will ask for your consent first and update this page. To withdraw consent, email contact@fingtaj.com.</p></div></div></section>
+
+<section class="pg lg" id="disclaimer" hidden><div class="ph"><div class="w"><h1>Disclaimer</h1><p>Last updated 15 November 2026</p></div></div><div class="s"><div class="w">
+<h2>Not legal or regulatory advice</h2><p>Content on this website is general information. It is not legal, tax, financial or regulatory advice. ADAM-AR is not approved or endorsed by SEBI, TRAI, RBI or any other regulator.</p>
+<h2>AI can be wrong</h2><p>Transcripts, scores and flags can contain errors. Verify important findings before acting on them.</p>
+<h2>Illustrative figures</h2><p>Sample audits, comparisons and call equivalents are illustrations. Results depend on audio quality, language and your rulebook. Prices are proposed launch prices and exclude GST.</p>
+<h2>Third-party links</h2><p>We are not responsible for the content of other websites.</p></div></div></section>
+
+<!-- company page paused <section class="pg lg" id="company" hidden><div class="ph"><div class="w"><h1>Company and grievance officer</h1><p>Who runs ADAM-AR and how to raise a complaint</p></div></div><div class="s"><div class="w">
+<div class="ov"><table class="tb"><tr><th>Detail</th><th>Information</th></tr>
+<tr><td>Legal name</td><td><mark>[Legal entity name]</mark></td></tr><tr><td>Entity type and CIN or LLPIN</td><td><mark>[Private Limited / LLP / other, number]</mark></td></tr>
+<tr><td>Registered office</td><td><mark>[Full address]</mark></td></tr><tr><td>GSTIN</td><td><mark>[GSTIN]</mark></td></tr>
+<tr><td>Website and brand</td><td>ADAM-AR, voice audit intelligence</td></tr><tr><td>Email</td><td>contact@fingtaj.com</td></tr><tr><td>Phone</td><td><mark>[Phone, with hours]</mark></td></tr></table></div>
+<h2>Grievance officer</h2><p>Name: <mark>[Name]</mark><br>Designation: <mark>[Designation]</mark><br>Email: <mark>[grievance email, or contact@fingtaj.com]</mark><br>Phone: <mark>[Phone]</mark><br>Based in India.</p>
+<p>Email a complaint with your name, contact details and what went wrong. We acknowledge within 48 hours and aim to resolve it within one month. Privacy and data requests go to the same officer.</p></div></div></section> -->
+</main>
+
+<footer><div class="w">
+<div><img src="data:image/png;base64,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" alt="ADAM-AR"><span>Voice audit intelligence for institutions.</span></div>
+<div><a href="#audit">AI Audit</a><a href="#support">AI Support Desk</a><a href="#pricing">Pricing</a></div>
+<div><a href="#security">Security</a><a href="#contact">Contact</a><a href="mailto:contact@fingtaj.com">contact@fingtaj.com</a></div>
+<div><a href="#privacy">Privacy policy</a><a href="#terms">Terms of service</a><a href="#refunds">Refunds and cancellation</a><a href="#calls">Call compliance</a><a href="#cookies">Cookies</a><a href="#disclaimer">Disclaimer</a></div>
+<small>© 2026 - ADAM</small>
+</div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+function route(){let h=location.hash.slice(1)||"home";if(!$(h))h="home";
+document.querySelectorAll(".pg").forEach(s=>s.hidden=s.id!==h);
+document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+h));
+window.scrollTo(0,0)}
+addEventListener("hashchange",route);route();
+
+/* hero demo */
+const L=[["00:04","Dealer","“Welcome to Equity Dealing Desk. Am I speaking with Mr. Rajesh Kumar on registered CLI +91-98401XXXXX?”","CLI verified"],
+["00:15","Customer","“Yes, Rajesh here. Please buy 100 shares of Reliance at limit price 2,840.”",""],
+["00:22","Dealer","“Understood. Placing pre-order BUY 100 shares RELIANCE at 2,840 on NSE before order punching. Confirming verbal assent?”","Pre-order timing · Scrip, price, qty"],
+["00:31","Customer","“Yes, confirm. Please execute.”","Verbal assent"],
+["00:36","Dealer","“Order executed on exchange. Trade ref #883921. No return commitments made.”","No profit guarantees"]];
+const P=["Registered caller verification","Pre-order instruction chronology","Scrip, price and quantity","Explicit customer verbal assent","Prohibition of return guarantees"];
+const M=[[0],[],[1,2],[3],[4]];let sc=0;
+P.forEach(p=>$("ck").insertAdjacentHTML("beforeend",`<li><span>${p}</span><b>–</b></li>`));
+function step(i){const[t,w,x,g]=L[i];
+$("tr").insertAdjacentHTML("beforeend",`<p>[${t}] <b class="${w[0]=="C"?"c":""}">${w}:</b> ${x}${g?`<span class="tg">${g} ✓</span>`:""}</p>`);
+M[i].forEach(k=>{const li=$("ck").children[k];li.className="ok";li.lastChild.textContent="20/20";sc+=20});
+$("sc").firstChild.textContent=sc}
+if(matchMedia("(prefers-reduced-motion:reduce)").matches)L.forEach((_,i)=>step(i));
+else{let i=0;const t=setInterval(()=>{step(i++);if(i>=L.length)clearInterval(t)},1300)}
+
+/* pricing */
+const A=[
+{n:"Starter",p:"₹7,999",a:"5,000 audited minutes (about 250 calls)",o:"₹1.80 per extra minute",f:["Transcription","Basic AI quality scoring","Basic compliance checks","Basic agent analytics and sentiment","Standard audit forms","Single team"]},
+{n:"Growth",p:"₹34,999",a:"25,000 audited minutes (about 1,250 calls)",o:"₹1.60 per extra minute",f:["Transcription and sentiment","Custom scorecards and forms","Compliance checking","Agent performance analytics","Basic fraud and risk flags","Basic coaching tips","Team dashboard","API and CRM add-on (optional)"]},
+{n:"Business",p:"₹1,19,999",a:"100,000 audited minutes (about 5,000 calls)",o:"₹1.40 per extra minute",f:["Advanced quality scoring","Advanced compliance rules","Advanced analytics and risk flags","Advanced audit forms","Coaching recommendations","Selected integrations","Multiple teams"]},
+{n:"Enterprise",p:"₹2,74,999",a:"300,000 audited minutes (about 15,000 calls)",o:"₹1.05 per extra minute",f:["Custom scoring and rule sets","Multi-team analytics","Custom risk rules","Custom forms and workflows","Advanced coaching","Custom integrations","Enterprise reporting"]}];
+const S=[
+{n:"Starter",p:"₹2,999",a:"1 concurrent call, 300 connected minutes",o:"₹6.50 per extra minute",f:["Inbound and outbound calling*","1 AI support agent","Basic knowledge base","Basic summaries and history","Basic analytics","Standard support"]},
+{n:"Growth",p:"₹7,999",a:"3 concurrent calls, 1,000 connected minutes",o:"₹6.00 per extra minute",f:["Inbound and outbound calling*","Multiple workflows","Integrated knowledge base","Summaries and history","Human escalation","Standard analytics","CRM add-on (optional)","Priority support"]},
+{n:"Business",p:"₹14,999",a:"5 concurrent calls, 2,500 connected minutes",o:"₹5.50 per extra minute",f:["Inbound and outbound calling*","Multiple AI agents","Advanced, custom knowledge base","Advanced summaries","Custom escalation workflows","Advanced analytics","CRM included or agreed","Priority support, SLA option"]},
+{n:"Enterprise",p:"Custom",a:"Quoted for your concurrency and minutes",o:"Quoted separately",f:["Concurrency and minutes to suit","Integrations and deployment","SLA agreed in writing","Load-test validation"]}];
+let cur=0;
+function plans(k){cur=k;$("t0").setAttribute("aria-pressed",k==0);$("t1").setAttribute("aria-pressed",k==1);
+const d=k?S:A;
+$("plans").innerHTML=d.map((x,i)=>`<article class="pl${i==d.length-1?" top":""}"><h3>${x.n}</h3><p class="pr">${x.p}<small>${x.p=="Custom"?"quotation":"per month, excl. GST"}</small></p><p class="al">${x.a}</p><ul>${x.f.map(y=>`<li>${y}</li>`).join("")}</ul><p class="o">${x.o}</p><a class="btn ${i==d.length-1?"am":"dk"}" href="#contact" data-p="${k?"AI Support Desk":"AI Audit"} – ${x.n}">${x.p=="Custom"?"Request a quote":"Choose "+x.n}</a></article>`).join("");
+$("pn").textContent=k?"*Calling is subject to permitted use, consent and notices, telecom rules, provider coverage and destination restrictions. Overage rules for minutes, transfers and carrier charges are set out in the order form.":"Audit minutes are billed on actual processed audio, not call count. The 20-minute call equivalents are illustrative."}
+$("t0").onclick=()=>plans(0);$("t1").onclick=()=>plans(1);plans(0);
+$("plans").addEventListener("click",e=>{const a=e.target.closest("a[data-p]");if(!a)return;
+const p=a.dataset.p;$("i").value=p.startsWith("AI Support")?"AI Support Desk":"AI Audit";$("m").value=`I’d like to discuss the ${p} plan.`});
+
+/* contact */
+$("f").addEventListener("submit",e=>{e.preventDefault();
+const f=e.target;const ok=["n","e","o","m"].every(k=>f[k].value.trim())&&/^\S+@\S+\.\S+$/.test(f.e.value)&&f.c.checked;
+$("er").hidden=ok;if(!ok)return;
+const body=`Name: ${f.n.value}\nWork email: ${f.e.value}\nOrganisation: ${f.o.value}\nInterested in: ${f.i.value}\nMonthly call volume: ${f.v.value||"Not given"}\nConsent to use these details to reply: Yes, ${new Date().toISOString()}\n\n${f.m.value}`;
+const sub="ADAM-AR enquiry: "+f.i.value;
+const u=`mailto:contact@fingtaj.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+$("cp").value=`To: contact@fingtaj.com\nSubject: ${sub}\n\n${body}`;$("ml").href=u;$("out").hidden=false;
+try{window.open(u,"_blank")}catch(x){}});
+$("cb").onclick=()=>{$("cp").select();try{navigator.clipboard.writeText($("cp").value)}catch(x){document.execCommand("copy")}$("cb").textContent="Copied"};
+const wv=$("wave");for(let i=0;i<56;i++){const b=document.createElement("b");b.style.setProperty("--h",(.25+Math.abs(Math.sin(i*.45))*.75).toFixed(2));b.style.animationDelay=(i*-.11)+"s";wv.appendChild(b)}
+const bar=$("bar");addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h>0?scrollY/h:0})`},{passive:true});
+document.addEventListener("pointermove",e=>{const c=e.target.closest&&e.target.closest(".pl,.cd,.pn");if(c){const r=c.getBoundingClientRect();c.style.setProperty("--x",e.clientX-r.left+"px");c.style.setProperty("--y",e.clientY-r.top+"px")}});
+const hero=document.querySelector(".hero"),dm=document.querySelector(".dm");
+if(matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches){hero.addEventListener("pointermove",e=>{const r=dm.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;dm.style.transform=`perspective(900px) rotateY(${x*8}deg) rotateX(${-y*8}deg)`});hero.addEventListener("pointerleave",()=>dm.style.transform="")}
+const calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+const io="IntersectionObserver"in window&&!calm?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;t.classList.add("in");io.unobserve(t);setTimeout(()=>t.style.transitionDelay="",1200)}}),{threshold:.12}):null;
+function reveal(){if(!io)return;document.querySelectorAll(".pg:not([hidden]) :is(.stats>div,.two>*,.rl>div,.stp>div,.ov,.band .w,.fq,.cd):not(.rv)").forEach((el,i)=>{el.classList.add("rv");el.style.transitionDelay=(i%4)*70+"ms";io.observe(el)})}
+addEventListener("hashchange",reveal);reveal();
+if("IntersectionObserver"in window&&!calm){const cu=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;cu.unobserve(t);const n=+t.dataset.n,p=t.dataset.p||"",s=t.dataset.s||"";let k=0;const f=()=>{k+=n/40;t.textContent=p+Math.round(Math.min(k,n))+s;if(k<n)requestAnimationFrame(f)};f()}),{threshold:.6});document.querySelectorAll("[data-n]").forEach(b=>cu.observe(b))}
+const INC=[5000,25000,100000,300000],PR=[7999,34999,119999,274999],OV=[1.8,1.6,1.4,1.05],NM=["Starter","Growth","Business","Enterprise"],fm=n=>Math.round(n).toLocaleString("en-IN");
+function est(){const m=(+$("cc").value||0)*(+$("cl").value||0);let b=0,bc=1e12;PR.forEach((p,i)=>{const c=p+Math.max(0,m-INC[i])*OV[i];if(c<bc){bc=c;b=i}});$("ce").innerHTML=`<b>${fm(m)}</b> audited minutes a month. Lowest estimated cost: <b>${NM[b]}</b> at about <b>₹${fm(bc)}</b> a month, excluding GST${m>INC[b]?` (including ₹${fm((m-INC[b])*OV[b])} overage)`:""}. This is an estimate, not a quote.`}
+$("cc").oninput=$("cl").oninput=est;est();
+</script>
+</body>
+</html>
